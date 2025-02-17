@@ -1,0 +1,13 @@
+[
+  {
+    "name" : "config",
+    "bad_processes" : [
+      "LeagueClient.exe",
+      "nvim.exe"
+    ],
+    "good_processes" : [
+      "nvim.exe"
+    ]
+
+  }
+]

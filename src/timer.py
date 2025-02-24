@@ -1,5 +1,4 @@
-
-
+import time;
 class Timer:
 
     def __init__(self, length_of_game, interval, game):
@@ -8,6 +7,7 @@ class Timer:
         """
         self.length = length_of_game;
         self.interval = interval;
+        self.interval_counter = 0;
         self.current_time = 0;
         self.game = game;
 
@@ -15,20 +15,50 @@ class Timer:
         """
         Starter function to run the program and keep it running until you terminate the program.
         """ 
-        while():
-            print("game is running")
-             
+        self.start_new_game();
+        while True:
+            #wait for 1 sec between game cycles.
+            time.sleep(1);
+            if(self.game.game_status()):
+                #update timer.
+                print("game is running!")
+                self.update_time();
+            else:
+                self.update_interval_counter();
+                print(self.interval_counter);
+                print("no games are running!")
+
+
+    def start_interval_counter(self):
+        """
+        Used when you want to start the inveral counter between games if you have the intverval game mode on.
+        """
+        self.interval_counter = 0;
+    
+    def update_interval_counter(self):
+        """
+        updates the interval every secound in the game loop.
+        """
+        self.interval_counter += 1;
+        if(self.interval_counter == self.interval):
+            self.start_new_game();
     def start_new_game(self):
         """
         This function start a new game. it will get all the data from the self functions.
         """
         #start the timer for a new game.
+        print("new game has been started hope you win.")
+        self.current_time = 0;
+        self.game.change_game_status(True);
     
     def update_time(self):
         """
         updates the current time in the game.
         """
-        
-
+        self.current_time += 1;
+        if(self.current_time >= self.length):
+            print("games is over well done you made it!");
+            self.game.change_game_status(False)
+            self.start_interval_counter();
 
 

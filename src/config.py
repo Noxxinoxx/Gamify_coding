@@ -5,3 +5,4 @@ paths = dict(
 )
 badProcesses = ["cs2.exe", "LeagueClient.exe"]
 goodProcesses = ["nvim.exe", "terminal.exe"]
+test = "test"

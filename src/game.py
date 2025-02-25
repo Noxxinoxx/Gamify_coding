@@ -1,8 +1,9 @@
-
+import config
+import processes
 class Game:
     def __init__(self):
         self.game_number = 0;
-        self.game_mode = "i";
+        self.game_mode = config.gameMode;
         self.game_running = False; 
     
     def update_game_number(self,number):
@@ -21,4 +22,23 @@ class Game:
         change be used if a bad process is lanched to force quit the running game.
         """
         self.game_running = running;
-        
+    def game_check_processes(self):
+        """
+        This is called when the timer or other process wants to use the game logic for checking the processes running on the system
+        """
+        p = processes.Processes();
+        values = p.runCheck();
+
+        if(values["bad_processes"] >= 1):
+            return False
+
+        return True;
+
+    def keep_game_running(self):
+        """
+        returns if the we keep the game running and no bad processes has been started.
+        """
+        return self.game_check_processes();
+
+
+

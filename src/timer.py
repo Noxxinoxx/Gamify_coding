@@ -1,4 +1,5 @@
-import time;
+import time
+import config;
 class Timer:
 
     def __init__(self, length_of_game, interval, game):
@@ -10,6 +11,7 @@ class Timer:
         self.interval_counter = 0;
         self.current_time = 0;
         self.game = game;
+        self.check_interval = config.check_processes_interval;
 
     def run_program(self):
         """
@@ -22,11 +24,18 @@ class Timer:
             if(self.game.game_status()):
                 #update timer.
                 print("game is running!")
+                if(self.current_time % self.check_interval == 0):
+                    if not self.game.keep_game_running():
+                        #then the game is over and we restart.
+                        self.game_lost();
+                    
                 self.update_time();
-            else:
+            elif(self.game.game_mode == "i"):
                 self.update_interval_counter();
-                print(self.interval_counter);
-                print("no games are running!")
+                print(f"{self.interval - self.interval_counter} sec until next game starts!");
+                
+            else:
+                print("no games are running!");
 
 
     def start_interval_counter(self):
@@ -42,6 +51,17 @@ class Timer:
         self.interval_counter += 1;
         if(self.interval_counter == self.interval):
             self.start_new_game();
+
+    def game_lost(self):
+        """
+        This function is called when we lose a game.
+        """    
+        #here we add points that the user lost.
+        print("Game over you lost because you opened a process on the bad list!")
+        self.start_interval_counter();
+        self.game.change_game_status(False);
+
+
     def start_new_game(self):
         """
         This function start a new game. it will get all the data from the self functions.

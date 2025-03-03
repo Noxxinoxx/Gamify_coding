@@ -13,7 +13,7 @@ class Processes :
         """
         bad_processes_running = 0;
         good_processes_running = 0;
-
+        
         for process in self.process.Win32_Process():
             for bad_processes in self.bad_processes:
                 if(bad_processes == process.Name):

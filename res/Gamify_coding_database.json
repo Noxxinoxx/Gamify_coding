@@ -1,5 +1,8 @@
 [
-
-
-
+    {
+        "username": "nox",
+        "games": [],
+        "LP": 100,
+        "LP_gain": 20
+    }
 ]

@@ -46,20 +46,36 @@ class Game:
     def win(self):
         """
         This function gets called when you win a game.
+        
         """
+
+
+        #need to fix the get data later now we just use the standrad tool
+
+
+        #this code here where we save the updated thing lp in a class varible might be good if we send alot of things to
+        #our database. if we get the steak from a database call then the save mechanics will be redundent.
+
+        
 
         lp_gain = self.user_database[0]["LP_gain"]
         lp = self.user_lp;
         new_lp = lp + lp_gain;
         self.user_lp = new_lp;
+        self.update_streak(True);
+
+        database = tools.read_from_database();
+
+        win_streak = database[0]["win_streak"];
+        
+        new_lp = new_lp + (win_streak * 2);
+
         tools.update_value_in_database("LP", new_lp);
 
-        print(f"Good Job you won the game you got {lp}")
+        print(f"Good Job you won the game you got {new_lp}")
         
-        
-
         self.update_game_number();
-        self.change_game_status(False);
+        self.change_game_status(False);  
 
 
     def game_lost(self):
@@ -69,21 +85,30 @@ class Game:
         #here we add points that the user lost.
         print("Game over you lost because you opened a process on the bad list!")
         self.update_game_number();
-        self.change_game_status(False);    
+        self.change_game_status(False);
+        self.update_streak(False);
 
     def update_streak(self, win):
         """
         updates a users win or lose streak depending on the win varible.
+        can also reset a steak
         """
-
         database = tools.read_from_database();
 
         if win:
             database[0]["win_streak"] = database[0]["win_streak"] + 1;
+            database[0]["lose_streak"] = 0;
         else: 
             database[0]["lose_streak"] = database[0]["lose_streak"] + 1;
+            database[0]["win_streak"] = 0;
+ 
 
         tools.write_database(database);
+    
+
+
+
+
 
 
 

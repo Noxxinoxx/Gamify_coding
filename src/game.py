@@ -71,8 +71,19 @@ class Game:
         self.update_game_number();
         self.change_game_status(False);    
 
+    def update_streak(self, win):
+        """
+        updates a users win or lose streak depending on the win varible.
+        """
 
+        database = tools.read_from_database();
 
+        if win:
+            database[0]["win_streak"] = database[0]["win_streak"] + 1;
+        else: 
+            database[0]["lose_streak"] = database[0]["lose_streak"] + 1;
+
+        tools.write_database(database);
 
 
 

@@ -71,7 +71,7 @@ class Timer:
         self.current_time += 1;
         if(self.current_time >= self.length):
             print("games is over well done you made it!");
-            self.game.win();
+            self.game.game_win();
             self.start_interval_counter();
 
 

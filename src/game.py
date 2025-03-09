@@ -43,7 +43,10 @@ class Game:
         """
         return self.game_check_processes();
     
-    def win(self):
+
+    #both game win and game lost will be reworked later in the lp system. this is just a mom work version.
+    #this are connected to issue 
+    def game_win(self):
         """
         This function gets called when you win a game.
         
@@ -66,16 +69,30 @@ class Game:
         self.update_game_number();
         self.change_game_status(False);  
 
-
     def game_lost(self):
         """
         This function is called when we lose a game.
         """    
-        #here we add points that the user lost.
+
+        #update the steak for the user.
+        self.update_streak(False);
+        lose_streak = self.user_database[0]["lose_streak"]
+        
+        #update the lp that the user has lost.
+        lp_gain = self.user_database[0]["LP_gain"];
+        lp = self.user_database[0]["LP"];
+        new_lp = lp - lp_gain;
+
+        new_lp = new_lp - (lose_streak * 2);
+
+        #write the new changes to the database file and to the local save of.
+        self.user_database[0]["LP"] = new_lp;
+        tools.update_value_in_database("LP", new_lp);
+
         print("Game over you lost because you opened a process on the bad list!")
         self.update_game_number();
         self.change_game_status(False);
-        self.update_streak(False);
+           
 
     def update_streak(self, win):
         """

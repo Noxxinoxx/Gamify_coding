@@ -2,12 +2,12 @@ import time
 import config;
 class Timer:
 
-    def __init__(self, length_of_game, interval, game):
+    def __init__(self, game):
         """
         The init takes a time that is the lenght of the game and a interval that is the interval between games.
         """
-        self.length = length_of_game;
-        self.interval = interval;
+        self.length = config.game_length;
+        self.interval = config.check_processes_interval;
         self.interval_counter = 0;
         self.current_time = 0;
         self.game = game;
@@ -27,8 +27,8 @@ class Timer:
                 if(self.current_time % self.check_interval == 0):
                     if not self.game.keep_game_running():
                         #then the game is over and we restart.
-                        self.game_lost();
-                    
+                        self.start_interval_counter();
+                        self.game.game_lost();                    
                 self.update_time();
             elif(self.game.game_mode == "i"):
                 self.update_interval_counter();
@@ -52,14 +52,7 @@ class Timer:
         if(self.interval_counter == self.interval):
             self.start_new_game();
 
-    def game_lost(self):
-        """
-        This function is called when we lose a game.
-        """    
-        #here we add points that the user lost.
-        print("Game over you lost because you opened a process on the bad list!")
-        self.start_interval_counter();
-        self.game.change_game_status(False);
+    
 
 
     def start_new_game(self):
@@ -78,7 +71,7 @@ class Timer:
         self.current_time += 1;
         if(self.current_time >= self.length):
             print("games is over well done you made it!");
-            self.game.change_game_status(False)
+            self.game.win();
             self.start_interval_counter();
 
 

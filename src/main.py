@@ -10,7 +10,7 @@ def main():
 
     print(f"you had {process_class.runCheck()} bad processes running!")
     
-    game_timer = timer.Timer(22, 10, game.Game())
+    game_timer = timer.Timer(game.Game())
 
     game_timer.run_program();
 

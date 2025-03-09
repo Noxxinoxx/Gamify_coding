@@ -1,16 +1,19 @@
 import config
 import processes
+import tools
 class Game:
     def __init__(self):
         self.game_number = 0;
         self.game_mode = config.gameMode;
-        self.game_running = False; 
+        self.game_running = False;
+        self.user_database = tools.read_from_database();
+        self.user_lp = self.user_database[0]["LP"];
     
-    def update_game_number(self,number):
+    def update_game_number(self):
         """
         updates the game number this is part of the game logic for later.
         """
-        self.game_number = number;
+        self.game_number = self.game_number + 1;
     def game_status(self):
         """
         gets the game status if we have a running game or not.
@@ -39,6 +42,66 @@ class Game:
         returns if the we keep the game running and no bad processes has been started.
         """
         return self.game_check_processes();
+    
+    def win(self):
+        """
+        This function gets called when you win a game.
+        
+        """
+        lp_gain = self.user_database[0]["LP_gain"]
+        lp = self.user_database[0]["LP"]
+        new_lp = lp + lp_gain;
+
+        self.update_streak(True);
+        win_streak = self.user_database[0]["win_streak"];
+
+        new_lp = new_lp + (win_streak * 2);
+
+        self.user_database[0]["LP"] = new_lp;
+
+        tools.update_value_in_database("LP", new_lp);
+        
+        print(f"Good Job you won the game you got {new_lp}")
+        
+        self.update_game_number();
+        self.change_game_status(False);  
+
+
+    def game_lost(self):
+        """
+        This function is called when we lose a game.
+        """    
+        #here we add points that the user lost.
+        print("Game over you lost because you opened a process on the bad list!")
+        self.update_game_number();
+        self.change_game_status(False);
+        self.update_streak(False);
+
+    def update_streak(self, win):
+        """
+        updates a users win or lose streak depending on the win varible.
+        can also reset a steak
+        """
+        database = tools.read_from_database();
+
+        if win:
+            database[0]["win_streak"] = database[0]["win_streak"] + 1;
+            database[0]["lose_streak"] = 0;
+            self.user_database[0]["win_streak"] = self.user_database[0]["win_streak"] + 1;
+        else: 
+            database[0]["lose_streak"] = database[0]["lose_streak"] + 1;
+            database[0]["win_streak"] = 0;
+            self.user_database[0]["lose_streak"] = self.user_database[0]["lose_streak"] + 1;
+ 
+
+        tools.write_database(database);
+    
+
+
+
+
+
+
 
 
 

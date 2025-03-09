@@ -59,19 +59,18 @@ class Game:
         
 
         lp_gain = self.user_database[0]["LP_gain"]
-        lp = self.user_lp;
+        lp = self.user_database[0]["LP"]
         new_lp = lp + lp_gain;
-        self.user_lp = new_lp;
+
         self.update_streak(True);
+        win_streak = self.user_database[0]["win_streak"];
 
-        database = tools.read_from_database();
-
-        win_streak = database[0]["win_streak"];
-        
         new_lp = new_lp + (win_streak * 2);
 
-        tools.update_value_in_database("LP", new_lp);
+        self.user_database[0]["LP"] = new_lp;
 
+        tools.update_value_in_database("LP", new_lp);
+        
         print(f"Good Job you won the game you got {new_lp}")
         
         self.update_game_number();
@@ -98,9 +97,11 @@ class Game:
         if win:
             database[0]["win_streak"] = database[0]["win_streak"] + 1;
             database[0]["lose_streak"] = 0;
+            self.user_database[0]["win_streak"] = self.user_database[0]["win_streak"] + 1;
         else: 
             database[0]["lose_streak"] = database[0]["lose_streak"] + 1;
             database[0]["win_streak"] = 0;
+            self.user_database[0]["lose_streak"] = self.user_database[0]["lose_streak"] + 1;
  
 
         tools.write_database(database);

@@ -7,4 +7,5 @@ game_length = 10;
 check_processes_interval = 10;
 gameMode = "i"
 badProcesses = ["cs2.exe", "LeagueClient.exe"]
-goodProcesses = ["nvim.exe", "terminal.exe"]    
+goodProcesses = ["nvim.exe", "terminal.exe"]
+os = "linux"

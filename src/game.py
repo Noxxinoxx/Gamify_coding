@@ -48,16 +48,6 @@ class Game:
         This function gets called when you win a game.
         
         """
-
-
-        #need to fix the get data later now we just use the standrad tool
-
-
-        #this code here where we save the updated thing lp in a class varible might be good if we send alot of things to
-        #our database. if we get the steak from a database call then the save mechanics will be redundent.
-
-        
-
         lp_gain = self.user_database[0]["LP_gain"]
         lp = self.user_database[0]["LP"]
         new_lp = lp + lp_gain;

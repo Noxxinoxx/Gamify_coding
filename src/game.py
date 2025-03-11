@@ -45,20 +45,27 @@ class Game:
     
 
     #both game win and game lost will be reworked later in the lp system. this is just a mom work version.
-    #this are connected to issue 
-    def game_win(self):
+    #this are connected to issue
+
+    def game_done(self, win):
         """
-        This function gets called when you win a game.
+        This function is called with a game is done. it can either be a win or a lose.
+        if the game is a lost the win param should be false and if a win true.
+        return null
+        """
         
-        """
         lp_gain = self.user_database[0]["LP_gain"]
         lp = self.user_database[0]["LP"]
-        new_lp = lp + lp_gain;
-
+        
         self.update_streak(True);
         win_streak = self.user_database[0]["win_streak"];
 
-        new_lp = new_lp + (win_streak * 2);
+        if win :
+            new_lp = lp + lp_gain;
+            new_lp = lp + (win_steak * 2);
+        else :
+            new_lp = lp - lp_gain;
+            new_lp = lp - (lose_steak * 2);
 
         self.user_database[0]["LP"] = new_lp;
 
@@ -68,31 +75,7 @@ class Game:
         
         self.update_game_number();
         self.change_game_status(False);  
-
-    def game_lost(self):
-        """
-        This function is called when we lose a game.
-        """    
-
-        #update the steak for the user.
-        self.update_streak(False);
-        lose_streak = self.user_database[0]["lose_streak"]
-        
-        #update the lp that the user has lost.
-        lp_gain = self.user_database[0]["LP_gain"];
-        lp = self.user_database[0]["LP"];
-        new_lp = lp - lp_gain;
-
-        new_lp = new_lp - (lose_streak * 2);
-
-        #write the new changes to the database file and to the local save of.
-        self.user_database[0]["LP"] = new_lp;
-        tools.update_value_in_database("LP", new_lp);
-
-        print("Game over you lost because you opened a process on the bad list!")
-        self.update_game_number();
-        self.change_game_status(False);
-           
+          
 
     def update_streak(self, win):
         """

@@ -59,13 +59,14 @@ class Game:
         
         self.update_streak(True);
         win_streak = self.user_database[0]["win_streak"];
+        lose_streak = self.user_database[0]["lose_streak"];
 
         if win :
             new_lp = lp + lp_gain;
-            new_lp = lp + (win_steak * 2);
+            new_lp = new_lp + (win_streak * 2);
         else :
             new_lp = lp - lp_gain;
-            new_lp = lp - (lose_steak * 2);
+            new_lp = new_lp - (lose_streak * 2);
 
         self.user_database[0]["LP"] = new_lp;
 

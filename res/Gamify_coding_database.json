@@ -2,9 +2,9 @@
     {
         "username": "nox",
         "games": [],
-        "LP": 624,
+        "LP": 694,
         "LP_gain": 20,
-        "win_streak": 0,
-        "lose_streak": 4
+        "win_streak": 5,
+        "lose_streak": 0
     }
 ]

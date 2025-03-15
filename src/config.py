@@ -6,5 +6,6 @@ paths = dict(
 game_length = 10;
 check_processes_interval = 10;
 gameMode = "i"
+OS = "Linux"
 badProcesses = ["cs2.exe", "LeagueClient.exe"]
 goodProcesses = ["nvim.exe", "terminal.exe"]    

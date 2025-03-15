@@ -28,7 +28,7 @@ class Timer:
                     if not self.game.keep_game_running():
                         #then the game is over and we restart.
                         self.start_interval_counter();
-                        self.game.game_lost();                    
+                        self.game.game_done(False);                    
                 self.update_time();
             elif(self.game.game_mode == "i"):
                 self.update_interval_counter();
@@ -71,7 +71,7 @@ class Timer:
         self.current_time += 1;
         if(self.current_time >= self.length):
             print("games is over well done you made it!");
-            self.game.win();
+            self.game.game_done(True);
             self.start_interval_counter();
 
 

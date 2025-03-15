@@ -1,3 +1,4 @@
+from enum import STRICT
 import time
 import config;
 class Timer:
@@ -12,7 +13,7 @@ class Timer:
         self.current_time = 0;
         self.game = game;
         self.check_interval = config.check_processes_interval;
-
+        self.strikes = config.strikes;
     def run_program(self):
         """
         Starter function to run the program and keep it running until you terminate the program.
@@ -53,8 +54,6 @@ class Timer:
             self.start_new_game();
 
     
-
-
     def start_new_game(self):
         """
         This function start a new game. it will get all the data from the self functions.
@@ -74,4 +73,24 @@ class Timer:
             self.game.game_done(True);
             self.start_interval_counter();
 
+    def remove_one_strike(self):
+        """
+        This function will remove a strike from the game.
+        """
+        self.strikes = self.strikes - 1;
+
+    def validate_strikes(self):
+        """
+        This function will check your strikes and see if you have any left.
+        """
+        if(self.strikes > 0):
+            return True;
+        else: 
+            return False;
+
+    def reset_strikes(self):
+        """
+        This function will reset the strikes to the config standard.
+        """
+        self.strikes = config.strikes;
 

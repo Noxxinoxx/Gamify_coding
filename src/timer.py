@@ -1,4 +1,3 @@
-from enum import STRICT
 import time
 import config;
 class Timer:
@@ -93,4 +92,13 @@ class Timer:
         This function will reset the strikes to the config standard.
         """
         self.strikes = config.strikes;
+    
+    def pause_game(self) : 
+        """
+        This function sets the game to pause.
+        """
+        
+
+
+
 

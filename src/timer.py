@@ -13,6 +13,7 @@ class Timer:
         self.game = game;
         self.check_interval = config.check_processes_interval;
         self.strikes = config.strikes;
+        self.paused = False;
     def run_program(self):
         """
         Starter function to run the program and keep it running until you terminate the program.
@@ -21,21 +22,25 @@ class Timer:
         while True:
             #wait for 1 sec between game cycles.
             time.sleep(1);
-            if(self.game.game_status()):
-                #update timer.
-                print("game is running!")
-                if(self.current_time % self.check_interval == 0):
-                    if not self.game.keep_game_running():
-                        #then the game is over and we restart.
-                        self.start_interval_counter();
-                        self.game.game_done(False);                    
-                self.update_time();
-            elif(self.game.game_mode == "i"):
-                self.update_interval_counter();
-                print(f"{self.interval - self.interval_counter} sec until next game starts!");
-                
+            if self.paused:
+                print("game is paused")
             else:
-                print("no games are running!");
+                if(self.game.game_status()):
+                    #update timer.
+                    print("game is running!")
+                    if(self.current_time % self.check_interval == 0):
+                        if not self.game.keep_game_running():
+                            #then the game is over and we restart.
+                            self.start_interval_counter();
+                            self.game.game_done(False);                    
+                    self.update_time();
+                elif(self.game.game_mode == "i"):
+                    self.update_interval_counter();
+                    print(f"{self.interval - self.interval_counter} sec until next game starts!");
+                
+                else:
+                    print("no games are running!");
+
 
 
     def start_interval_counter(self):
@@ -97,7 +102,15 @@ class Timer:
         """
         This function sets the game to pause.
         """
+        self.paused = True;
         
+    def unpause_game(self): 
+        """
+        This function unpauses the game.
+        """
+        self.paused = False;
+
+
 
 
 

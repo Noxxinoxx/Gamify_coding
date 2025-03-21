@@ -8,5 +8,8 @@ check_processes_interval = 10;
 gameMode = "i"
 OS = "Linux"
 strikes = 2;
+port = 3000;
+
+
 badProcesses = ["cs2.exe", "LeagueClient.exe"]
 goodProcesses = ["nvim.exe", "terminal.exe"]    

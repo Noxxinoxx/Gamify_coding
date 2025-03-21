@@ -102,8 +102,13 @@ class Timer:
         """
         This function sets the game to pause.
         """
-        self.paused = True;
+        if self.validate_strikes(): 
+            self.remove_one_strike()
+            self.paused = True;
+        else:
+            print("Game cant be paused anymore you are out of strikes");
         
+
     def unpause_game(self): 
         """
         This function unpauses the game.

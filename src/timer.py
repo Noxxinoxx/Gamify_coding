@@ -12,7 +12,8 @@ class Timer:
         self.current_time = 0;
         self.game = game;
         self.check_interval = config.check_processes_interval;
-
+        self.strikes = config.strikes;
+        self.paused = False;
     def run_program(self):
         """
         Starter function to run the program and keep it running until you terminate the program.
@@ -21,21 +22,25 @@ class Timer:
         while True:
             #wait for 1 sec between game cycles.
             time.sleep(1);
-            if(self.game.game_status()):
-                #update timer.
-                print("game is running!")
-                if(self.current_time % self.check_interval == 0):
-                    if not self.game.keep_game_running():
-                        #then the game is over and we restart.
-                        self.start_interval_counter();
-                        self.game.game_done(False);                    
-                self.update_time();
-            elif(self.game.game_mode == "i"):
-                self.update_interval_counter();
-                print(f"{self.interval - self.interval_counter} sec until next game starts!");
-                
+            if self.paused:
+                print("game is paused")
             else:
-                print("no games are running!");
+                if(self.game.game_status()):
+                    #update timer.
+                    print("game is running!")
+                    if(self.current_time % self.check_interval == 0):
+                        if not self.game.keep_game_running():
+                            #then the game is over and we restart.
+                            self.start_interval_counter();
+                            self.game.game_done(False);                    
+                    self.update_time();
+                elif(self.game.game_mode == "i"):
+                    self.update_interval_counter();
+                    print(f"{self.interval - self.interval_counter} sec until next game starts!");
+                
+                else:
+                    print("no games are running!");
+
 
 
     def start_interval_counter(self):
@@ -53,8 +58,6 @@ class Timer:
             self.start_new_game();
 
     
-
-
     def start_new_game(self):
         """
         This function start a new game. it will get all the data from the self functions.
@@ -73,5 +76,47 @@ class Timer:
             print("games is over well done you made it!");
             self.game.game_done(True);
             self.start_interval_counter();
+
+    def remove_one_strike(self):
+        """
+        This function will remove a strike from the game.
+        """
+        self.strikes = self.strikes - 1;
+
+    def validate_strikes(self):
+        """
+        This function will check your strikes and see if you have any left.
+        """
+        if(self.strikes > 0):
+            return True;
+        else: 
+            return False;
+
+    def reset_strikes(self):
+        """
+        This function will reset the strikes to the config standard.
+        """
+        self.strikes = config.strikes;
+    
+    def pause_game(self) : 
+        """
+        This function sets the game to pause.
+        """
+        if self.validate_strikes(): 
+            self.remove_one_strike()
+            self.paused = True;
+        else:
+            print("Game cant be paused anymore you are out of strikes");
+        
+
+    def unpause_game(self): 
+        """
+        This function unpauses the game.
+        """
+        self.paused = False;
+
+
+
+
 
 

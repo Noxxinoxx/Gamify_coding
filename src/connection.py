@@ -26,7 +26,10 @@ class Connection:
         self.conn, self.addr = self.socket.accept();
 
     def run_api(self): 
-    
+        """
+        this function runs every tick the application is running its job is to
+        retrive data from a client aka frontend function.
+        """    
         #get 1024 bit worth of data;
         data = self.conn.recv(1024);
 
@@ -37,6 +40,9 @@ class Connection:
             return None;
     
     def send_data(self, data):
+        """
+        This function is used to send data from the server to the client.
+        """
         self.conn.sendall(data);
 
 

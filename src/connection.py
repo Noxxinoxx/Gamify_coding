@@ -9,18 +9,34 @@ class Connection:
         """
         self.socket = socket.socket();
         self.port = config.port;
-        
-    def start(self): 
+        self.host = config.host;
+        self.addr = None;
+        self.conn = None;
+
+
+    def init(self): 
         """
         Use this function to start/init the socket server.
         """
 
-        self.socket.bind(("", self.port));
+        self.socket.bind((self.host, self.port));
 
         self.socket.listen(5);
+        
+        self.conn, self.addr = self.socket.accept();
 
+    def run_api(self): 
+    
+        #get 1024 bit worth of data;
+        data = self.conn.recv(1024);
 
-
-
+        if data:
+            return self.send_data(data);
+        else:
+            print("waiting for data!");
+            return None;
+    
+    def send_data(self, data):
+        self.conn.sendall(data);
 
 

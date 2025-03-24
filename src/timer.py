@@ -1,5 +1,6 @@
-import time
+import time;
 import config;
+import connection;
 class Timer:
 
     def __init__(self, game):
@@ -14,14 +15,25 @@ class Timer:
         self.check_interval = config.check_processes_interval;
         self.strikes = config.strikes;
         self.paused = False;
+        self.api = connection.Connection();
+
     def run_program(self):
         """
         Starter function to run the program and keep it running until you terminate the program.
         """ 
         self.start_new_game();
+        #init api;
+        self.api.init();
         while True:
             #wait for 1 sec between game cycles.
-            time.sleep(1);
+            time.sleep(1);  
+            #run the connection to the api.
+            
+            try:
+                self.api.run_api();
+            except:
+                print("Error : background api did not init correctly.");
+
             if self.paused:
                 print("game is paused")
             else:
@@ -66,7 +78,7 @@ class Timer:
         print("new game has been started hope you win.")
         self.current_time = 0;
         self.game.change_game_status(True);
-    
+
     def update_time(self):
         """
         updates the current time in the game.

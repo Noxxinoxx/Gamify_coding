@@ -40,5 +40,23 @@ def write_database(data):
     with open(database, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
+def tranfrom_into_string(data):
+    """
+    Function takes in some kind of data and transforms it into a string.
+    """
+    return str(data);
+
+
+def transform_string_into_bytes(data):
+    """
+    Transform string data into bytes to be sent over socket connection.
+    """
+    return data.encode("utf-8");
+
+
+
+
+
+
 
 

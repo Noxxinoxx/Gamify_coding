@@ -2,7 +2,7 @@
 This file has some api calls.
 1. game state: /api/game_state
 """
-
+import tools;
 class Router:
     """
     This class is used to route all the api calls from the frontend and the backend.
@@ -27,5 +27,5 @@ class Router:
         """
         Function handels the fetching of the game state.
         """
-        return self.game.game_status();
-        
+        return tools.tranfrom_into_string(self.game.game_status());
+

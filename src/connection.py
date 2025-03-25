@@ -1,6 +1,7 @@
 import socket
 import config
 import api
+import tools
 
 class Connection:
     def __init__(self, game_class):
@@ -41,6 +42,6 @@ class Connection:
         """
         This function is used to send data from the server to the client.
         """
-        self.conn.sendall(data.encode("utf-8"));
+        self.conn.sendall(tools.transform_string_into_bytes(data));
 
 

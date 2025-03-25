@@ -27,10 +27,11 @@ class Connection:
         retrive data from a client aka frontend function.
         """    
         #get 1024 bit worth of data;
-        data = self.conn.recv(1024);
+        data = self.conn.recv(512);
 
         if data:
             respond_data = self.router.router(data);
+            print(respond_data)
             return self.send_data(respond_data);
         else:
             print("waiting for data!");
@@ -40,6 +41,6 @@ class Connection:
         """
         This function is used to send data from the server to the client.
         """
-        self.conn.sendall(data);
+        self.conn.sendall(data.encode("utf-8"));
 
 

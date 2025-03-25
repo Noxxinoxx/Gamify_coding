@@ -18,14 +18,14 @@ class Router:
         This function is ment to hadle the api routes.
         """
         match route:
-            case "/api/game_status":
-                return self.router_game_state();        
+            case b"/api/game_status":
+                return self.router_game_status();        
             case _:
                 return "Error : Api call unknown!"
 
-    def router_game_state(self):
+    def router_game_status(self):
         """
         Function handels the fetching of the game state.
         """
-        print(self.game.game_status());
-        print("get game state.");
+        return self.game.game_status();
+        

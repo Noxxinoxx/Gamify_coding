@@ -9,7 +9,7 @@ class Connection:
         This is the backend code that front end progams uses to talk.
         """
         self.router = api.Router(game_class) 
-        self.socket = socket.socket();
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
         self.port = config.port;
         self.host = config.host;
         self.addr = None;
@@ -28,7 +28,7 @@ class Connection:
         """    
         #get 1024 bit worth of data;
         data = self.conn.recv(512);
-
+        print(data);
         if data:
             respond_data = self.router.router(data);
             print(respond_data)

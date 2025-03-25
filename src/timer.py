@@ -15,6 +15,7 @@ class Timer:
         self.check_interval = config.check_processes_interval;
         self.strikes = config.strikes;
         self.paused = False;
+        #inits the api.
         self.api = connection.Connection();
 
     def run_program(self):
@@ -22,8 +23,6 @@ class Timer:
         Starter function to run the program and keep it running until you terminate the program.
         """ 
         self.start_new_game();
-        #init api;
-        self.api.init();
         while True:
             #wait for 1 sec between game cycles.
             time.sleep(1);  

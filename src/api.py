@@ -16,4 +16,13 @@ class Router:
         """
         This function is ment to hadle the api routes.
         """
+        match route:
+            case "/api/game_state":
+                return self.router_game_state();        
+    
 
+    def router_game_state(self):
+        """
+        Function handels the fetching of the game state.
+        """
+        print("get game state.");

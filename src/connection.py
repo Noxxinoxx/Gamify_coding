@@ -12,13 +12,7 @@ class Connection:
         self.host = config.host;
         self.addr = None;
         self.conn = None;
-
-
-    def init(self): 
-        """
-        Use this function to start/init the socket server.
-        """
-
+        
         self.socket.bind((self.host, self.port));
 
         self.socket.listen(5);

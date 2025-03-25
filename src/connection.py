@@ -1,12 +1,14 @@
 import socket
 import config
+import api
 
 class Connection:
-    def __init__(self):
+    def __init__(self, game_class):
         """
         inits all the needed things to run the socket. 
         This is the backend code that front end progams uses to talk.
         """
+        self.router = api.Router(game_class) 
         self.socket = socket.socket();
         self.port = config.port;
         self.host = config.host;
@@ -28,7 +30,8 @@ class Connection:
         data = self.conn.recv(1024);
 
         if data:
-            return self.send_data(data);
+            respond_data = self.router.router(data);
+            return self.send_data(respond_data);
         else:
             print("waiting for data!");
             return None;

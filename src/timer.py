@@ -16,7 +16,7 @@ class Timer:
         self.strikes = config.strikes;
         self.paused = False;
         #inits the api.
-        self.api = connection.Connection();
+        self.api = connection.Connection(self.game);
 
     def run_program(self):
         """
@@ -28,10 +28,10 @@ class Timer:
             time.sleep(1);  
             #run the connection to the api.
             
-            try:
-                self.api.run_api();
-            except:
-                print("Error : background api did not init correctly.");
+            #try:
+            self.api.run_api();
+            #except:
+            #    print("Error : background api did not init correctly.");
 
             if self.paused:
                 print("game is paused")

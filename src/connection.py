@@ -4,12 +4,12 @@ import api
 import tools
 
 class Connection:
-    def __init__(self, game_class):
+    def __init__(self,timer, game_class):
         """
         inits all the needed things to run the socket. 
         This is the backend code that front end progams uses to talk.
         """
-        self.router = api.Router(game_class) 
+        self.router = api.Router(timer, game_class) 
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
         self.port = config.port;
         self.host = config.host;
@@ -44,4 +44,4 @@ class Connection:
         """
         self.conn.sendall(tools.transform_string_into_bytes(data));
 
-
+        return True;

@@ -16,7 +16,7 @@ class Timer:
         self.strikes = config.strikes;
         self.paused = False;
         #inits the api.
-        self.api = connection.Connection(self.game);
+        self.api = connection.Connection(self,self.game);
 
     def run_program(self):
         """

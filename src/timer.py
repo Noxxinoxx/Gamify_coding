@@ -1,6 +1,8 @@
 import time;
 import config;
-import connection;
+from connection import Connection;
+from thread_handler import Thread_handler;
+
 class Timer:
 
     def __init__(self, game):
@@ -16,34 +18,42 @@ class Timer:
         self.strikes = config.strikes;
         self.paused = False;
         #inits the api.
-        self.api = connection.Connection(self,self.game);
+        self.api = Connection(self,self.game);
+        self.thread_handle = Thread_handler();
 
     def run_program(self):
         """
         Starter function to run the program and keep it running until you terminate the program.
         """ 
         self.start_new_game();
+        
+
         while True:
             #wait for 1 sec between game cycles.
             time.sleep(1);  
             #run the connection to the api.
             
-            #try:
-            self.api.run_api();
-            #except:
-            #    print("Error : background api did not init correctly.");
+            self.api.run_api();            
 
-            if self.paused:
-                print("game is paused")
-            else:
-                if(self.game.game_status()):
-                    #update timer.
-                    print("game is running!")
-                    if(self.current_time % self.check_interval == 0):
-                        if not self.game.keep_game_running():
-                            #then the game is over and we restart.
-                            self.start_interval_counter();
-                            self.game.game_done(False);                    
+            self.running_game();
+
+
+
+    def running_game(self):
+        """
+        This function is called for the game logic.
+        """
+        if self.paused:
+            print("game is paused")
+        else:
+            if(self.game.game_status()):
+                #update timer.
+                print("game is running!")
+                if(self.current_time % self.check_interval == 0):
+                    if not self.game.keep_game_running():
+                        #then the game is over and we restart.
+                        self.start_interval_counter();
+                        self.game.game_done(False);                    
                     self.update_time();
                 elif(self.game.game_mode == "i"):
                     self.update_interval_counter();
@@ -52,7 +62,7 @@ class Timer:
                 else:
                     print("no games are running!");
 
-
+ 
 
     def start_interval_counter(self):
         """

@@ -1,4 +1,5 @@
 import time;
+import api
 import config;
 from connection import Connection;
 from thread_handler import Thread_handler;
@@ -18,7 +19,7 @@ class Timer:
         self.strikes = config.strikes;
         self.paused = False;
         #inits the api.
-        self.api = Connection(self,self.game);
+        self.api = None; 
         self.thread_handle = Thread_handler();
 
     def run_program(self):
@@ -28,14 +29,16 @@ class Timer:
         self.start_new_game();
         
 
+        #self.api = Connection(self, self.game);
+        api_thread = self.thread_handle.create_thread(Connection(self, self.game));
+        api_thread.start();
+
         while True:
             #wait for 1 sec between game cycles.
             time.sleep(1);  
             #run the connection to the api.
-            
-            self.api.run_api();            
 
-            self.running_game();
+            self.running_game(); 
 
 
 

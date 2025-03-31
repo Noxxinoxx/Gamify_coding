@@ -1,10 +1,19 @@
-
+import threading;
 
 class Thread_handler:
     def __init__(self): 
         self.command_queue = [];
         self.responde_queue = [];
+        self.thread_list = [];
 
+    def create_thread(self, target_function):
+        """
+        This will create a thread.
+        """
+        x = threading.Thread(target=target_function);
+        self.thread_list.append(x);
+        return x;
+    
     def add_to_command_queue(self, data):
         """
         Adds a new command to the command queue the gamelogic api will handle the command after

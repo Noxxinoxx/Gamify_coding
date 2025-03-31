@@ -26,17 +26,19 @@ class Connection:
         """
         this function runs every tick the application is running its job is to
         retrive data from a client aka frontend function.
-        """    
-        #get 1024 bit worth of data;
-        data = self.conn.recv(512);
-        print(data);
-        if data:
-            respond_data = self.router.router(data);
-            print(respond_data)
-            return self.send_data(respond_data);
-        else:
-            print("waiting for data!");
-            return None;
+        """   
+
+        while True:
+            #get 1024 bit worth of data;
+            data = self.conn.recv(512);
+            print(data);
+            if data:
+                respond_data = self.router.router(data);
+                print(respond_data)
+                return self.send_data(respond_data);
+            else:
+                print("waiting for data!");
+                return None;
     
     def send_data(self, data):
         """

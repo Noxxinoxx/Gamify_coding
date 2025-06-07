@@ -51,13 +51,15 @@ class Timer:
         else:
             if(self.game.game_status()):
                 #update timer.
-                print("game is running!")
+                print("game is running!") 
+                
                 if(self.current_time % self.check_interval == 0):
                     if not self.game.keep_game_running():
                         #then the game is over and we restart.
                         self.start_interval_counter();
                         self.game.game_done(False);                    
                     self.update_time();
+
                 elif(self.game.game_mode == "i"):
                     self.update_interval_counter();
                     print(f"{self.interval - self.interval_counter} sec until next game starts!");
@@ -89,6 +91,7 @@ class Timer:
         #start the timer for a new game.
         print("new game has been started hope you win.")
         self.current_time = 0;
+        self.interval_counter = 0;
         self.game.change_game_status(True);
 
     def update_time(self):
